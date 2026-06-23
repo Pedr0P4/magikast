@@ -1,0 +1,173 @@
+[gd_scene format=3 uid="uid://cdy8b5awu0uyt"]
+
+[ext_resource type="Script" uid="uid://u5hvgqh7lm6b" path="res://scripts/menu.gd" id="1_u81ku"]
+
+[node name="Menu" type="Control" unique_id=1662470123]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_u81ku")
+
+[node name="BackButton" type="MarginContainer" parent="." unique_id=1319786508]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="BackButton" type="Button" parent="BackButton" unique_id=1189217647]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Voltar"
+
+[node name="MenuButtons" type="VBoxContainer" parent="." unique_id=1041076492]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -33.0
+offset_right = 22.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="MenuButtons" unique_id=534913856]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="MenuButtons" unique_id=2145477125]
+layout_mode = 2
+text = "Join"
+
+[node name="HostPanel" type="Panel" parent="." unique_id=127216292]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HostPanel" unique_id=1793622190]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HostPanel/MarginContainer" unique_id=1233556288]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HostPanel/MarginContainer/VBoxContainer" unique_id=1669067390]
+layout_mode = 2
+
+[node name="PortLabel" type="Label" parent="HostPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2072390658]
+layout_mode = 2
+text = "Porta:"
+
+[node name="PortInput" type="LineEdit" parent="HostPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1965994358]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "00000"
+
+[node name="CreateButton" type="Button" parent="HostPanel/MarginContainer/VBoxContainer" unique_id=465701784]
+layout_mode = 2
+text = "Criar"
+
+[node name="JoinPanel" type="Panel" parent="." unique_id=1266082724]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="JoinPanel" unique_id=1080989066]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinPanel/MarginContainer" unique_id=542066416]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="JoinPanel/MarginContainer/VBoxContainer" unique_id=1039995135]
+layout_mode = 2
+theme_override_constants/separation = -32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=207562419]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IPLabel" type="Label" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=581948820]
+layout_mode = 2
+text = "IP:"
+
+[node name="IPInput" type="LineEdit" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=1481452350]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "000.000.000.000"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=839581987]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="PortLabel" type="Label" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" unique_id=195255663]
+layout_mode = 2
+text = "Porta:"
+
+[node name="PortInput" type="LineEdit" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" unique_id=566185177]
+layout_mode = 2
+placeholder_text = "00000"
+
+[node name="JoinButton" type="Button" parent="JoinPanel/MarginContainer/VBoxContainer" unique_id=18342171]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Join"
+
+[connection signal="pressed" from="BackButton/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MenuButtons/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MenuButtons/JoinButton" to="." method="_on_join_button_pressed"]
