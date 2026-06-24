@@ -57,7 +57,7 @@ text = "Join"
 
 [node name="HostPanel" type="Panel" parent="." unique_id=127216292]
 visible = false
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 130)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -91,6 +91,7 @@ theme_override_constants/separation = 12
 layout_mode = 2
 
 [node name="PortLabel" type="Label" parent="HostPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2072390658]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "Porta:"
 
@@ -99,13 +100,27 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "00000"
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="HostPanel/MarginContainer/VBoxContainer" unique_id=1044092037]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="HostPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=600186834]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Nome:"
+
+[node name="NameInput" type="LineEdit" parent="HostPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1053699215]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Player"
+
 [node name="CreateButton" type="Button" parent="HostPanel/MarginContainer/VBoxContainer" unique_id=465701784]
 layout_mode = 2
+size_flags_vertical = 10
 text = "Criar"
 
 [node name="JoinPanel" type="Panel" parent="." unique_id=1266082724]
 visible = false
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 125)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -133,6 +148,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="JoinPanel/MarginContainer" unique_id=542066416]
 layout_mode = 2
+theme_override_constants/separation = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="JoinPanel/MarginContainer/VBoxContainer" unique_id=1039995135]
 layout_mode = 2
@@ -163,7 +179,18 @@ text = "Porta:"
 layout_mode = 2
 placeholder_text = "00000"
 
-[node name="JoinButton" type="Button" parent="JoinPanel/MarginContainer/VBoxContainer" unique_id=18342171]
+[node name="HBoxContainer2" type="HBoxContainer" parent="JoinPanel/MarginContainer/VBoxContainer" unique_id=359071988]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1346331917]
+layout_mode = 2
+text = "Nome:"
+
+[node name="NameInput" type="LineEdit" parent="JoinPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=101201427]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinButton" type="Button" parent="JoinPanel/MarginContainer" unique_id=18342171]
 layout_mode = 2
 size_flags_vertical = 10
 text = "Join"
@@ -171,3 +198,5 @@ text = "Join"
 [connection signal="pressed" from="BackButton/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="MenuButtons/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="MenuButtons/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="HostPanel/MarginContainer/VBoxContainer/CreateButton" to="." method="_on_create_button_pressed"]
+[connection signal="pressed" from="JoinPanel/MarginContainer/JoinButton" to="." method="_on_join_server_button_pressed"]

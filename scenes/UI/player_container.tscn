@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bxeysv6prbdu8"]
+
+[ext_resource type="Script" uid="uid://bdl6wbdjvism8" path="res://scripts/UI/player_container.gd" id="1_i4iqg"]
+
+[node name="PlayerContainer" type="Panel" unique_id=22162997]
+custom_minimum_size = Vector2(0, 50)
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource("1_i4iqg")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=19213099]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1381804398]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1438246522]
+layout_mode = 2
+text = "Nome"
