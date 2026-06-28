@@ -13,7 +13,8 @@ var player_id: int;
 var shoot_scene: PackedScene = preload("res://scenes/shoot.tscn");
 
 func _ready() -> void:
-	cd.timeout.connect(_on_cd_timeout);
+	if is_multiplayer_authority():
+		cd.timeout.connect(_on_cd_timeout);
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
@@ -23,6 +24,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		request_attack.rpc_id(1, rotation, global_position);
 		can_shoot = false;
 		cd.start();
+		print(player_name + " atirou!");
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
@@ -38,13 +40,16 @@ func _physics_process(delta: float) -> void:
 	move_and_slide();
 	look_at(get_global_mouse_position());
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func request_attack(player_rotation: float, player_position: Vector2) -> void:
 	var shoot: Area2D = shoot_scene.instantiate();
+	var shooter_id: int = multiplayer.get_remote_sender_id();
+	
+	shoot.name = "Proj_" + str(shooter_id) + "_" + str(Time.get_ticks_usec());
 	shoot.rotation = player_rotation;
 	shoot.global_position = player_position;
-	get_node("/root/Game/Projectiles").add_child(shoot);
-		
+	get_node("../../Projectiles").add_child(shoot);
 
 func _on_cd_timeout() -> void:
-	can_shoot = true;
+	if is_multiplayer_authority():
+		can_shoot = true;

@@ -8,6 +8,4 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if not multiplayer.is_server():
 		return;
-	
 	print(body.player_name + " Tomou");
-	queue_free();

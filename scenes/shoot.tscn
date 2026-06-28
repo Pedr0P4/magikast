@@ -5,6 +5,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nj6qa"]
 size = Vector2(10, 10)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wt6h8"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Shoot" type="Area2D" unique_id=2017187276]
 script = ExtResource("1_wt6h8")
 
@@ -24,5 +32,8 @@ color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1060609352]
 shape = SubResource("RectangleShape2D_nj6qa")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1894445718]
+replication_config = SubResource("SceneReplicationConfig_wt6h8")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
