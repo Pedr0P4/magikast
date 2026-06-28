@@ -1,3 +1,16 @@
 [gd_scene format=3 uid="uid://bxjgtlo1nh5n2"]
 
+[ext_resource type="Script" uid="uid://b8f1f23shuswg" path="res://scripts/game.gd" id="1_uwrxv"]
+
 [node name="Game" type="Node2D" unique_id=233544582]
+script = ExtResource("1_uwrxv")
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1455018103]
+spawn_path = NodePath("../Players")
+
+[node name="ProjectileSpawner" type="MultiplayerSpawner" parent="." unique_id=2144715491]
+spawn_path = NodePath("../Projectiles")
+
+[node name="Players" type="Node" parent="." unique_id=1250875405]
+
+[node name="Projectiles" type="Node" parent="." unique_id=1647759089]
