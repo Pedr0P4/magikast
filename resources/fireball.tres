@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PowerData" format=3 uid="uid://ej4bw11g12ns"]
+
+[ext_resource type="Script" uid="uid://cgcgtt47fj444" path="res://scripts/power_data.gd" id="1_6daih"]
+[ext_resource type="PackedScene" uid="uid://jq01yje4duyx" path="res://scenes/powers/fireball.tscn" id="1_scene"]
+
+[resource]
+script = ExtResource("1_6daih")
+power_name = "Fireball"
+eficiency = 10
+scene = ExtResource("1_scene")
+is_attack = true
+metadata/_custom_type_script = "uid://cgcgtt47fj444"

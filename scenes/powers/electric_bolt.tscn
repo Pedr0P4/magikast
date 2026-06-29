@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://rbkscee5m0pb"]
+
+[ext_resource type="PackedScene" uid="uid://dl5ki1uj5t6fu" path="res://scenes/base_power.tscn" id="1_24tux"]
+[ext_resource type="Script" uid="uid://cfrvl3oxhlhve" path="res://scripts/powers/electric_bolt.gd" id="2_5p6o4"]
+[ext_resource type="Texture2D" uid="uid://ddb6jyc7y6886" path="res://assets/electric_bolt.png" id="2_uulv5"]
+[ext_resource type="Texture2D" uid="uid://dhvdfgfbml2fb" path="res://assets/electric_bolt_explosion.png" id="3_uulv5"]
+[ext_resource type="Resource" uid="uid://iaij3awe4uu8" path="res://resources/electric_bolt.tres" id="3_data"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nj6qa"]
+size = Vector2(6, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5p6o4"]
+atlas = ExtResource("3_uulv5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blod8"]
+atlas = ExtResource("3_uulv5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50arp"]
+atlas = ExtResource("3_uulv5")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyu7a"]
+atlas = ExtResource("3_uulv5")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nj6qa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5p6o4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blod8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50arp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyu7a")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="ElectricBolt" unique_id=2017187276 instance=ExtResource("1_24tux")]
+script = ExtResource("2_5p6o4")
+data = ExtResource("3_data")
+
+[node name="Sprite" type="Sprite2D" parent="." index="1" unique_id=1434315696]
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_uulv5")
+
+[node name="Collision" type="CollisionShape2D" parent="." index="2" unique_id=1053474246]
+shape = SubResource("RectangleShape2D_nj6qa")
+
+[node name="Explosion" type="AnimatedSprite2D" parent="." index="3" unique_id=448674219]
+visible = false
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_nj6qa")
+frame_progress = 0.53550345

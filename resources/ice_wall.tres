@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerData" format=3 uid="uid://dr1jxh5lm3vm3"]
+
+[ext_resource type="Script" uid="uid://cgcgtt47fj444" path="res://scripts/power_data.gd" id="1_dlwem"]
+
+[resource]
+script = ExtResource("1_dlwem")
+power_name = "Ice Wall"
+speed = 0.0
+cooldown = 15.0
+duration = 7.0
+metadata/_custom_type_script = "uid://cgcgtt47fj444"

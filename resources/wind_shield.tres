@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerData" format=3 uid="uid://bkd6a1hurama0"]
+
+[ext_resource type="Script" uid="uid://cgcgtt47fj444" path="res://scripts/power_data.gd" id="1_s721v"]
+
+[resource]
+script = ExtResource("1_s721v")
+power_name = "Wind Shield"
+eficiency = 25
+speed = 0.0
+cooldown = 12.0
+metadata/_custom_type_script = "uid://cgcgtt47fj444"

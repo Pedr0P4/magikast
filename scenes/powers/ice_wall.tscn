@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://b2ihlide2ven1"]
+
+[ext_resource type="PackedScene" uid="uid://dl5ki1uj5t6fu" path="res://scenes/base_power.tscn" id="1_sdvwe"]
+[ext_resource type="Texture2D" uid="uid://ckfc00ys7b0bl" path="res://assets/ice_wall.png" id="2_1mhgp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_af7vb"]
+atlas = ExtResource("2_1mhgp")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55a3g"]
+atlas = ExtResource("2_1mhgp")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8la7"]
+atlas = ExtResource("2_1mhgp")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f07qj"]
+atlas = ExtResource("2_1mhgp")
+region = Rect2(192, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nj6qa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_af7vb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55a3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8la7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f07qj")
+}],
+"loop": 1,
+"name": &"icewall",
+"speed": 0.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nj6qa"]
+size = Vector2(90, 21)
+
+[node name="IceWall" unique_id=2017187276 instance=ExtResource("1_sdvwe")]
+
+[node name="Sprite2" type="AnimatedSprite2D" parent="." index="1" unique_id=1962651850]
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_nj6qa")
+animation = &"icewall"
+
+[node name="Collision" type="CollisionShape2D" parent="." index="2" unique_id=1598502883]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_nj6qa")

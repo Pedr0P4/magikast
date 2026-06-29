@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://jq01yje4duyx"]
+
+[ext_resource type="PackedScene" uid="uid://dl5ki1uj5t6fu" path="res://scenes/base_power.tscn" id="1_p157e"]
+[ext_resource type="Script" uid="uid://b88sa1745x371" path="res://scripts/powers/fireball.gd" id="2_p608r"]
+[ext_resource type="Texture2D" uid="uid://cvspyr4numclp" path="res://assets/fireball.png" id="2_vovsa"]
+[ext_resource type="Texture2D" uid="uid://c16lam64owknr" path="res://assets/fireball_explosion.png" id="3_0sd4l"]
+[ext_resource type="Texture2D" uid="uid://dtm6eb2icpdrb" path="res://assets/smoke1.png" id="5_flgpd"]
+[ext_resource type="Texture2D" uid="uid://bddet36uxow17" path="res://assets/smoke2.png" id="6_07eew"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p608r"]
+atlas = ExtResource("3_0sd4l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ebgb"]
+atlas = ExtResource("3_0sd4l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flgpd"]
+atlas = ExtResource("3_0sd4l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07eew"]
+atlas = ExtResource("3_0sd4l")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lde2p"]
+atlas = ExtResource("3_0sd4l")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nj6qa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p608r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ebgb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flgpd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07eew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lde2p")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nj6qa"]
+radius = 8.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lde2p"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 7.54
+gravity = Vector3(0, 98, 0)
+scale_min = 0.19999999
+scale_max = 0.39999998
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nj6qa"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 7.54
+gravity = Vector3(0, 98, 0)
+scale_min = 0.29999998
+scale_max = 0.5
+
+[node name="Fireball" unique_id=2017187276 node_paths=PackedStringArray("explosion_animation") instance=ExtResource("1_p157e")]
+script = ExtResource("2_p608r")
+explosion_animation = NodePath("Explosion")
+
+[node name="Sprite" parent="." index="1" unique_id=1099656921]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_vovsa")
+
+[node name="Explosion" type="AnimatedSprite2D" parent="." index="2" unique_id=966411553]
+visible = false
+sprite_frames = SubResource("SpriteFrames_nj6qa")
+frame_progress = 0.9706793
+
+[node name="Collision" type="CollisionShape2D" parent="." index="3" unique_id=260862558]
+shape = SubResource("CircleShape2D_nj6qa")
+
+[node name="Smoke2" type="GPUParticles2D" parent="." index="4" unique_id=827395825]
+amount = 15
+amount_ratio = 0.3805
+texture = ExtResource("6_07eew")
+process_material = SubResource("ParticleProcessMaterial_lde2p")
+
+[node name="Smoke1" type="GPUParticles2D" parent="." index="5" unique_id=565799107]
+amount = 15
+amount_ratio = 0.3805
+texture = ExtResource("5_flgpd")
+process_material = SubResource("ParticleProcessMaterial_nj6qa")
