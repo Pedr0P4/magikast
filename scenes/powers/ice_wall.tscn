@@ -39,8 +39,8 @@ animations = [{
 "speed": 0.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nj6qa"]
-size = Vector2(90, 21)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5p6o4"]
+size = Vector2(90, 16)
 
 [node name="IceWall" unique_id=2017187276 instance=ExtResource("1_sdvwe")]
 
@@ -50,6 +50,6 @@ scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_nj6qa")
 animation = &"icewall"
 
-[node name="Collision" type="CollisionShape2D" parent="." index="2" unique_id=1598502883]
-position = Vector2(0, -1.5)
-shape = SubResource("RectangleShape2D_nj6qa")
+[node name="Collision" parent="." index="4" unique_id=1497367224]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_5p6o4")
