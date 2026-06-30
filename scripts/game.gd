@@ -33,7 +33,7 @@ func spawn_player(id: int, player_name: String):
 
 func _spawn(data: Variant) -> Player:
 	var player: Player = player_scene.instantiate();
-	player.current_power = load("res://resources/fireball.tres");
+	player.current_power = load("res://resources/electric_bolt.tres");
 	player.player_id = data.id;
 	player.name = str(data.id);
 	player.player_name = data.name;

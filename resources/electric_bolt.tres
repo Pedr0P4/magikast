@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="PowerData" format=3 uid="uid://iaij3awe4uu8"]
 
 [ext_resource type="Script" uid="uid://cgcgtt47fj444" path="res://scripts/power_data.gd" id="1_bh3tr"]
+[ext_resource type="PackedScene" uid="uid://rbkscee5m0pb" path="res://scenes/powers/electric_bolt.tscn" id="1_eylvf"]
 
 [resource]
 script = ExtResource("1_bh3tr")
 power_name = "Electric Bolt"
 eficiency = 5
 speed = 750.0
+scene = ExtResource("1_eylvf")
 is_attack = true
 metadata/_custom_type_script = "uid://cgcgtt47fj444"

@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://cfrvl3oxhlhve" path="res://scripts/powers/electric_bolt.gd" id="2_5p6o4"]
 [ext_resource type="Texture2D" uid="uid://ddb6jyc7y6886" path="res://assets/electric_bolt.png" id="2_uulv5"]
 [ext_resource type="Texture2D" uid="uid://dhvdfgfbml2fb" path="res://assets/electric_bolt_explosion.png" id="3_uulv5"]
+[ext_resource type="Texture2D" uid="uid://bew7eomunur5j" path="res://assets/sparkle1.png" id="5_50arp"]
+[ext_resource type="Texture2D" uid="uid://c44b48ato65jv" path="res://assets/sparkle2.png" id="6_tyu7a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5p6o4"]
 atlas = ExtResource("3_uulv5")
@@ -41,13 +43,54 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fyfam"]
+size = Vector2(22, 12)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hgsbm"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.04
+angle_min = 60.00001
+angle_max = 120.000015
+gravity = Vector3(0, 98, 0)
+scale_min = 0.59999996
+scale_max = 0.79999995
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hcmhh"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.04
+angle_min = 60.00001
+angle_max = 120.000015
+gravity = Vector3(0, 98, 0)
+scale_min = 0.29999998
+scale_max = 0.5
+
 [node name="ElectricBolt" unique_id=2017187276 instance=ExtResource("1_24tux")]
 script = ExtResource("2_5p6o4")
 
 [node name="Sprite" parent="." index="1" unique_id=1099656921]
-scale = Vector2(0.5, 0.5)
+rotation = 1.5707964
 texture = ExtResource("2_uulv5")
 
 [node name="Explosion" parent="." index="2" unique_id=599438621]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_flgpd")
+frame = 3
+frame_progress = 1.0
+
+[node name="Collision" parent="." index="3" unique_id=1497367224]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_fyfam")
+
+[node name="Sparkle1" type="GPUParticles2D" parent="." index="4" unique_id=1949883604]
+amount = 5
+texture = ExtResource("5_50arp")
+process_material = SubResource("ParticleProcessMaterial_hgsbm")
+
+[node name="Sparkle2" type="GPUParticles2D" parent="." index="5" unique_id=2001027764]
+amount = 10
+texture = ExtResource("6_tyu7a")
+process_material = SubResource("ParticleProcessMaterial_hcmhh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered_electric"]

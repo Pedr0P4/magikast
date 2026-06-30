@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c8t7rma06t2ri"]
 
 [ext_resource type="Script" uid="uid://b15w8b48mrd5f" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://b6xvncs8wxpx2" path="res://assets/stun_effect.png" id="2_g2els"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nj6qa"]
 
@@ -11,6 +12,45 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath(".:is_paralyzed")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("2_g2els")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+atlas = ExtResource("2_g2els")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("2_g2els")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hgsbm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlg0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="Player" type="CharacterBody2D" unique_id=977229570]
 script = ExtResource("1_3vyb7")
@@ -38,7 +78,7 @@ replication_config = SubResource("SceneReplicationConfig_3vyb7")
 [node name="PowerSpot" type="Marker2D" parent="." unique_id=133752779]
 position = Vector2(8, 0)
 
-[node name="CooldownTest" type="Timer" parent="." unique_id=31207091]
+[node name="PowerCooldown" type="Timer" parent="." unique_id=31207091]
 wait_time = 0.5
 one_shot = true
 
@@ -54,3 +94,14 @@ offset_right = 20.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ParalyzeTime" type="Timer" parent="." unique_id=342339731]
+wait_time = 4.0
+one_shot = true
+
+[node name="Paralyzed" type="AnimatedSprite2D" parent="." unique_id=1924497270]
+visible = false
+scale = Vector2(1.2, 1.2)
+sprite_frames = SubResource("SpriteFrames_hgsbm")
+frame = 1
+frame_progress = 0.75792277
