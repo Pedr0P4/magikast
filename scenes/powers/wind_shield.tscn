@@ -2,11 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://dl5ki1uj5t6fu" path="res://scenes/base_power.tscn" id="1_88q1k"]
 [ext_resource type="Texture2D" uid="uid://br3kw5yr6ryci" path="res://assets/wind_shield.png" id="2_fyfam"]
-[ext_resource type="Resource" uid="uid://bkd6a1hurama0" path="res://resources/wind_shield.tres" id="3_data"]
+[ext_resource type="Script" uid="uid://6wip5nm67qba" path="res://scripts/powers/wind_shield.gd" id="2_tpdxe"]
 
 [node name="WindShield" unique_id=2017187276 instance=ExtResource("1_88q1k")]
-data = ExtResource("3_data")
+script = ExtResource("2_tpdxe")
 
-[node name="Sprite" type="Sprite2D" parent="." index="1" unique_id=1930127315]
-texture_filter = 1
+[node name="Sprite" parent="." index="1" unique_id=1099656921]
 texture = ExtResource("2_fyfam")

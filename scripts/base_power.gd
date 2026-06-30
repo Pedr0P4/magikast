@@ -9,11 +9,14 @@ var creator_id: int;
 var data: PowerData;
 
 func _ready() -> void:
-	print("_ready do base");
 	monitoring = false
 	
 	if explosion and not explosion.animation_finished.get_connections():
 		explosion.animation_finished.connect(_on_explosion_finished)
+	
+	var splits = name.split("_");
+	if splits.size() >= 2:
+		creator_id = splits[1].to_int();
 	
 	await get_tree().physics_frame
 	

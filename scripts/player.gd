@@ -47,7 +47,6 @@ func request_attack(player_rotation: float) -> void:
 	var sender_id: int = multiplayer.get_remote_sender_id();
 	
 	power.data = current_power;
-	power.creator_id = sender_id;
 	power.name = "Proj_" + str(sender_id) + "_" + str(Time.get_ticks_usec());
 	power.rotation = player_rotation;
 	power.global_position = power_spot.global_position;
