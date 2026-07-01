@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://yx7x4y6lnyhh"]
+
+[ext_resource type="Script" uid="uid://b57dtpix5hb0r" path="res://scripts/UI/login.gd" id="1_stnps"]
+
+[node name="Login" type="Control" unique_id=1998280824]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_stnps")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1171090884]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1482541925]
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=868663159]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=2028899288]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1606028259]
+layout_mode = 2
+text = "Login"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=2082111302]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/VBoxContainer" unique_id=852682676]
+layout_mode = 2
+text = "Username"
+
+[node name="UsernameInput" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/VBoxContainer" unique_id=688132827]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=2134202956]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=41606782]
+layout_mode = 2
+text = "Password"
+
+[node name="PasswordInput" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=922930912]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=325592096]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Logar"
