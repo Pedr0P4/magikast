@@ -2,6 +2,7 @@ package codep.magikast.controller;
 
 import codep.magikast.dto.AuthRequest;
 import codep.magikast.dto.AuthResponse;
+import codep.magikast.dto.MatchResultRequest;
 import codep.magikast.model.Account;
 import codep.magikast.repository.AccountRepository;
 import codep.magikast.security.JwtUtil;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -33,6 +35,14 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    private AuthResponse createAuthResponse(String token, String message, Account account) {
+        if (account == null) {
+            return new AuthResponse(token, message);
+        }
+        String displayName = (account.getDisplayName() != null && !account.getDisplayName().isEmpty()) ? account.getDisplayName() : account.getUser();
+        return new AuthResponse(token, message, account.getUser(), displayName, account.getMatches(), account.getVictories(), account.getStreak(), account.getMaxStreak());
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
@@ -41,7 +51,8 @@ public class AuthController {
             );
 
             String token = jwtUtil.generateToken(auth.getName());
-            return ResponseEntity.ok(new AuthResponse(token, "Login successful"));
+            Account account = accountRepository.findByUser(auth.getName()).orElse(null);
+            return ResponseEntity.ok(createAuthResponse(token, "Login successful", account));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(401).body(new AuthResponse(null, "Invalid username or password"));
         }
@@ -59,6 +70,8 @@ public class AuthController {
         newAccount.setId(UUID.randomUUID().toString());
         newAccount.setUser(request.getUser());
         newAccount.setPassword(passwordEncoder.encode(request.getPassword()));
+        String displayName = (request.getDisplayName() != null && !request.getDisplayName().isEmpty()) ? request.getDisplayName() : request.getUser();
+        newAccount.setDisplayName(displayName);
         newAccount.setMatches(0);
         newAccount.setVictories(0);
         newAccount.setStreak(0);
@@ -67,7 +80,7 @@ public class AuthController {
         accountRepository.save(newAccount);
 
         String token = jwtUtil.generateToken(newAccount.getUser());
-        return ResponseEntity.ok(new AuthResponse(token, "User registered successfully"));
+        return ResponseEntity.ok(createAuthResponse(token, "User registered successfully", newAccount));
     }
 
     @PostMapping("/logout")
@@ -84,8 +97,9 @@ public class AuthController {
         String token = authHeader.substring(7);
         try {
             String username = jwtUtil.validateTokenAndRetrieveSubject(token);
-            if (accountRepository.findByUser(username).isPresent()) {
-                return ResponseEntity.ok(new AuthResponse(token, "Token is valid"));
+            Optional<Account> accOpt = accountRepository.findByUser(username);
+            if (accOpt.isPresent()) {
+                return ResponseEntity.ok(createAuthResponse(token, "Token is valid", accOpt.get()));
             } else {
                 return ResponseEntity.status(401).body(new AuthResponse(null, "User does not exist anymore"));
             }
@@ -93,4 +107,36 @@ public class AuthController {
             return ResponseEntity.status(401).body(new AuthResponse(null, "Invalid or expired token"));
         }
     }
+
+    @PostMapping("/match-end")
+    public ResponseEntity<?> matchEnd(@RequestHeader(value = "Authorization", required = false) String authHeader, @RequestBody MatchResultRequest request) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body(new AuthResponse(null, "No token provided"));
+        }
+        String token = authHeader.substring(7);
+        try {
+            String username = jwtUtil.validateTokenAndRetrieveSubject(token);
+            Optional<Account> accOpt = accountRepository.findByUser(username);
+            if (accOpt.isPresent()) {
+                Account account = accOpt.get();
+                account.setMatches(account.getMatches() + 1);
+                if (request.isWon()) {
+                    account.setVictories(account.getVictories() + 1);
+                    account.setStreak(account.getStreak() + 1);
+                    if (account.getStreak() > account.getMaxStreak()) {
+                        account.setMaxStreak(account.getStreak());
+                    }
+                } else {
+                    account.setStreak(0);
+                }
+                accountRepository.save(account);
+                return ResponseEntity.ok(createAuthResponse(token, "Match stats updated", account));
+            } else {
+                return ResponseEntity.status(401).body(new AuthResponse(null, "User not found"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(new AuthResponse(null, "Invalid or expired token"));
+        }
+    }
 }
+

@@ -15,11 +15,10 @@ import java.util.Optional;
 @Repository
 public class AccountRepository {
 
-    private final String FILE_PATH = "c:/Users/Pedro Paulo/Documents/magikast/accounts.json";
-    private final ObjectMapper objectMapper;
+    private final String FILE_PATH = "accounts.json";
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public AccountRepository(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+    public AccountRepository() {
     }
 
     @PostConstruct
@@ -27,7 +26,9 @@ public class AccountRepository {
         File file = new File(FILE_PATH);
         if (!file.exists()) {
             try {
-                file.getParentFile().mkdirs();
+                if (file.getParentFile() != null) {
+                    file.getParentFile().mkdirs();
+                }
                 file.createNewFile();
                 objectMapper.writeValue(file, new ArrayList<Account>());
             } catch (IOException e) {

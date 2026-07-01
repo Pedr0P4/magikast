@@ -11,6 +11,7 @@ public class Account {
     private String id;
     private String user;
     private String password;
+    private String displayName;
     private int matches;
     private int victories;
     private int streak;

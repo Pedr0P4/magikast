@@ -30,6 +30,27 @@ label_settings = SubResource("LabelSettings_hgsbm")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="UserBar" type="HBoxContainer" parent="." unique_id=9999999999]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -500.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 46.0
+grow_horizontal = 0
+alignment = 2
+theme_override_constants/separation = 15
+
+[node name="UserInfoLabel" type="Label" parent="UserBar" unique_id=8888888888]
+layout_mode = 2
+text = "Jogador: Player | Vitórias: 0 | Streak: 0"
+
+[node name="LogoutButton" type="Button" parent="UserBar" unique_id=7777777777]
+layout_mode = 2
+text = "Sair"
+
 [node name="BackButton" type="MarginContainer" parent="." unique_id=1319786508]
 visible = false
 layout_mode = 1

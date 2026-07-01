@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthRequest {
-    private String user;
-    private String password;
-    private String displayName;
+public class MatchResultRequest {
+    private boolean won;
 }

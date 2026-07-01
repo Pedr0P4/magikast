@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Magikast"
-run/main_scene="uid://cdy8b5awu0uyt"
+run/main_scene="uid://yx7x4y6lnyhh"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 NetworkHandler="*uid://4fxrsynnl1tf"
+ApiHandler="*res://scripts/autoload/api_handler.gd"
 
 [display]
 

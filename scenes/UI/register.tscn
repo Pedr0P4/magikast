@@ -24,8 +24,8 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="Panel" type="Panel" parent="MarginContainer" unique_id=106787683]
-custom_minimum_size = Vector2(500, 270)
-custom_maximum_size = Vector2(500, 300)
+custom_minimum_size = Vector2(500, 320)
+custom_maximum_size = Vector2(500, 360)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -37,13 +37,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=684271748]
 layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=479192660]
 layout_mode = 2
@@ -79,8 +80,17 @@ text = "Password"
 
 [node name="PasswordInput" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=897327810]
 layout_mode = 2
+secret = true
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=3333333333]
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1034625560]
 layout_mode = 2
 size_flags_vertical = 10
 text = "Registrar"
+
+[node name="LoginButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=4444444444]
+layout_mode = 2
+text = "Já possui conta? Logar"

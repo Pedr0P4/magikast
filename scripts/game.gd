@@ -81,6 +81,14 @@ func show_game_over(winner_name: String) -> void:
 	game_over_screen.visible = true
 	winner_label.text = winner_name + " Venceu a Batalha!"
 	
+	var my_id = multiplayer.get_unique_id()
+	var my_name = ""
+	if NetworkHandler.players.has(my_id):
+		my_name = str(NetworkHandler.players[my_id]["name"])
+	var won = (winner_name == my_name)
+	if ApiHandler:
+		ApiHandler.record_match_end(won)
+	
 	get_tree().paused = true
 	
 	await get_tree().create_timer(4.0, true, false, true).timeout
