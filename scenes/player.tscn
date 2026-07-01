@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b15w8b48mrd5f" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://b6xvncs8wxpx2" path="res://assets/stun_effect.png" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://jkmrbhtdocq1" path="res://assets/fire1.png" id="3_dqkch"]
+[ext_resource type="Texture2D" uid="uid://6ddk2g80h2d3" path="res://assets/fire2.png" id="4_qlg0r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nj6qa"]
 
@@ -15,6 +17,15 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:is_paralyzed")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:is_burning")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:health")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_dqkch"]
+font_size = 8
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -52,6 +63,22 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hgsbm"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(8, 1, 1)
+gravity = Vector3(0, -98, 0)
+scale_min = 0.5
+scale_max = 0.79999995
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tuyoq"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(12, 10, 1)
+gravity = Vector3(0, -98, 0)
+scale_min = 0.19999999
+scale_max = 0.39999998
+
 [node name="Player" type="CharacterBody2D" unique_id=977229570]
 script = ExtResource("1_3vyb7")
 
@@ -88,16 +115,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -33.0
-offset_right = 20.0
-offset_bottom = -10.0
+offset_left = -19.0
+offset_top = -34.0
+offset_right = 21.0
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
+label_settings = SubResource("LabelSettings_dqkch")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ParalyzeTime" type="Timer" parent="." unique_id=342339731]
 wait_time = 4.0
 one_shot = true
+
+[node name="BurnTime" type="Timer" parent="." unique_id=800078506]
+wait_time = 6.0
+one_shot = true
+
+[node name="BurnTick" type="Timer" parent="." unique_id=401014319]
+wait_time = 0.5
 
 [node name="Paralyzed" type="AnimatedSprite2D" parent="." unique_id=1924497270]
 visible = false
@@ -105,3 +142,35 @@ scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_hgsbm")
 frame = 1
 frame_progress = 0.75792277
+
+[node name="Burning" type="Node2D" parent="." unique_id=448020169]
+visible = false
+
+[node name="Fire1" type="GPUParticles2D" parent="Burning" unique_id=155763905]
+amount = 2
+amount_ratio = 0.8
+texture = ExtResource("3_dqkch")
+lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_hgsbm")
+
+[node name="Fire2" type="GPUParticles2D" parent="Burning" unique_id=126097410]
+amount = 4
+amount_ratio = 0.4
+texture = ExtResource("4_qlg0r")
+lifetime = 0.8
+process_material = SubResource("ParticleProcessMaterial_tuyoq")
+
+[node name="LifeBar" type="ProgressBar" parent="." unique_id=404679341]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -13.0
+offset_top = -18.0
+offset_right = 13.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
+show_percentage = false

@@ -11,11 +11,13 @@ extends Control
 @onready var client_name_input = $JoinPanel/MarginContainer/VBoxContainer/HBoxContainer2/NameInput;
 
 const PORT = 7777;
+const LOCALHOST = "127.0.0.1";
 const JOINING = "Joining";
 const JOINED = "Joined";
 
 func _ready() -> void:
-	iniciar_partida_debug();
+	pass;
+	#iniciar_partida_debug();
 
 func iniciar_partida_debug() -> void:
 	var peer = ENetMultiplayerPeer.new()
@@ -65,9 +67,15 @@ func _on_back_button_pressed() -> void:
 	back_button.visible = false;
 
 func _on_create_button_pressed() -> void:
-	NetworkHandler.host_game(int(host_port_input.text), host_name_input.text);
+	NetworkHandler.host_game(
+		int(host_port_input.text) if client_port_input.text else PORT, 
+		host_name_input.text if host_name_input.text else "HOST");
 	get_tree().change_scene_to_file("res://scenes/UI/lobby.tscn");
 
 func _on_join_server_button_pressed() -> void:
-	NetworkHandler.join_game(client_ip_input.text, int(client_port_input.text), client_name_input.text);
+	NetworkHandler.join_game(
+		client_ip_input.text if client_ip_input.text else LOCALHOST, 
+		int(client_port_input.text) if client_port_input.text else PORT, 
+		client_name_input.text if client_name_input.text else "CLIENT"
+		);
 	get_tree().change_scene_to_file("res://scenes/UI/lobby.tscn");

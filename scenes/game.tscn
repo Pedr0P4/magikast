@@ -1,9 +1,19 @@
 [gd_scene format=3 uid="uid://bxjgtlo1nh5n2"]
 
 [ext_resource type="Script" uid="uid://b8f1f23shuswg" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://cak4juqkxcsbd" path="res://scripts/power_generator.gd" id="2_yqjtg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hgsbm"]
+font_size = 32
 
 [node name="Game" type="Node2D" unique_id=233544582]
 script = ExtResource("1_uwrxv")
+
+[node name="PowerGenerator" type="Node2D" parent="." unique_id=1174373110]
+script = ExtResource("2_yqjtg")
+
+[node name="SpawnTimer" type="Timer" parent="PowerGenerator" unique_id=145633903]
+one_shot = true
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1455018103]
 spawn_path = NodePath("../Players")
@@ -12,6 +22,32 @@ spawn_path = NodePath("../Players")
 _spawnable_scenes = PackedStringArray("uid://jq01yje4duyx", "uid://rbkscee5m0pb", "uid://b2ihlide2ven1", "uid://ddktq0ttdf3hr")
 spawn_path = NodePath("../Projectiles")
 
+[node name="PowerSpawner" type="MultiplayerSpawner" parent="." unique_id=89314173]
+_spawnable_scenes = PackedStringArray("uid://chomvu6hogdfj")
+spawn_path = NodePath("../Powers")
+
 [node name="Players" type="Node" parent="." unique_id=1250875405]
 
 [node name="Projectiles" type="Node" parent="." unique_id=1647759089]
+
+[node name="Powers" type="Node" parent="." unique_id=615592311]
+
+[node name="GameOverScreen" type="CanvasLayer" parent="." unique_id=1760968849]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverScreen" unique_id=2090764372]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="WinnerLabel" type="Label" parent="GameOverScreen/MarginContainer" unique_id=1411127907]
+layout_mode = 2
+text = "VENCEDOR"
+label_settings = SubResource("LabelSettings_hgsbm")
+horizontal_alignment = 1

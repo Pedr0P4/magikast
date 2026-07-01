@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://x8nbkyqtyf7q"]
+
+[node name="Fim" type="Control" unique_id=1229440698]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=24082120]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1885397569]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=947374624]
+layout_mode = 2
+text = "VENCEDOR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer" unique_id=795923431]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Voltar ao menu"

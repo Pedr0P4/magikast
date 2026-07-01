@@ -31,6 +31,9 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.name == str(creator_id): return;
 	set_physics_process(false);
 	
+	if(body.has_method("take_damage")):
+		body.take_damage.rpc_id(body.player_id, data.eficiency);
+	
 	sprite.visible = false;
 	if explosion:
 		print("ATIVOU A EXPLOSAO");
@@ -38,10 +41,6 @@ func _on_body_entered(body: Node2D) -> void:
 		explosion.play();
 	
 	set_deferred("monitoring", false);
-	
-	if not multiplayer.is_server(): return;
-	
-	print(body.player_name + " Tomou");
 
 func _on_explosion_finished() -> void:
 	if multiplayer.is_server():

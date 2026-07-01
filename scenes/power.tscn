@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://chomvu6hogdfj"]
+
+[ext_resource type="Script" uid="uid://cofhvu614g4rn" path="res://scripts/power.gd" id="1_epnfp"]
+[ext_resource type="Texture2D" uid="uid://bhc5j8cfkoua5" path="res://assets/icon2.png" id="1_wv4di"]
+[ext_resource type="Texture2D" uid="uid://bq8phcl3xval6" path="res://assets/icon1.png" id="2_epnfp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hgsbm"]
+radius = 8.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_epnfp"]
+properties/0/path = NodePath(".:is_fireball")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Power" type="Area2D" unique_id=1207563393]
+script = ExtResource("1_epnfp")
+
+[node name="FireballIcon" type="Sprite2D" parent="." unique_id=1639751740]
+visible = false
+texture = ExtResource("1_wv4di")
+
+[node name="ElectricIcon" type="Sprite2D" parent="." unique_id=481920814]
+visible = false
+texture = ExtResource("2_epnfp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=680223440]
+shape = SubResource("CircleShape2D_hgsbm")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1643136850]
+replication_config = SubResource("SceneReplicationConfig_epnfp")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

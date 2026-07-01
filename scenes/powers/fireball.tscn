@@ -95,3 +95,5 @@ amount = 15
 amount_ratio = 0.3805
 texture = ExtResource("6_07eew")
 process_material = SubResource("ParticleProcessMaterial_lde2p")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered_fireball"]
