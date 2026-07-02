@@ -1,3 +1,57 @@
-# Godot 4+ specific ignores
+# ==========================================
+# Godot Specific Ignores
+# ==========================================
 .godot/
 /android/
+*.translation
+
+# Godot exported binaries/builds
+*.apk
+*.ap_
+*.aab
+*.exe
+*.dll
+*.so
+*.dylib
+*.dmg
+*.zip
+
+# ==========================================
+# Application Runtime/Database Files
+# ==========================================
+# Ignore the local account database to prevent credentials leaking or conflicts
+backend/accounts.json
+
+# ==========================================
+# Java / Gradle / Maven (Backend) Ignores
+# ==========================================
+backend/.gradle/
+backend/build/
+backend/bin/
+backend/out/
+.gradle/
+build/
+bin/
+out/
+
+# Gradle wrapper
+!backend/gradle/wrapper/gradle-wrapper.jar
+
+# ==========================================
+# Editor and System Ignores
+# ==========================================
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+.metadata/
+*.tmp
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
