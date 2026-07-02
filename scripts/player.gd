@@ -42,6 +42,7 @@ var current_power: PowerData;
 
 var can_shoot: bool = true;
 var is_dead: bool = false;
+var power_indicator: ColorRect = null;
 var player_name: String;
 var player_id: int;
 
@@ -55,6 +56,16 @@ func _ready() -> void:
 			name_label.text = player_name;
 		elif NetworkHandler.players.has(player_id):
 			name_label.text = NetworkHandler.players[player_id]["name"];
+	if power_spot:
+		power_indicator = ColorRect.new();
+		power_indicator.name = "PowerIndicator";
+		power_indicator.size = Vector2(8, 8);
+		power_indicator.position = Vector2(-4, -4);
+		power_indicator.rotation = PI / 4.0; # Losango / cristal de mira
+		power_indicator.pivot_offset = Vector2(4, 4);
+		power_indicator.visible = false;
+		power_spot.add_child(power_indicator);
+	_update_power_indicator();
 	if is_multiplayer_authority():
 		cd.timeout.connect(_on_cd_timeout);
 		pt.timeout.connect(_on_pt_timeout);
@@ -69,6 +80,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		request_attack.rpc_id(1, rotation);
 		can_shoot = false;
 		cd.start(current_power.cooldown);
+		_update_power_indicator();
 		print(player_name + " atirou!");
 
 func _physics_process(delta: float) -> void:
@@ -86,6 +98,7 @@ func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position());
 
 func die() -> void:
+	_update_power_indicator();
 	if burn_tick: burn_tick.stop();
 	if bt: bt.stop();
 	if cd: cd.stop();
@@ -118,6 +131,7 @@ func paralyze() -> void:
 	can_shoot = false;
 	is_paralyzed = true;
 	pt.start();
+	_update_power_indicator();
 
 @rpc("any_peer", "call_remote", "reliable")
 func burn() -> void:
@@ -132,6 +146,7 @@ func set_power(power_type: String) -> void:
 	elif power_type == "electric_bolt":
 		current_power = load("res://resources/electric_bolt.tres");
 	print(player_name + " adquiriu o poder: " + power_type);
+	_update_power_indicator();
 
 @rpc("any_peer", "call_local", "reliable")
 func request_attack(player_rotation: float) -> void:
@@ -166,6 +181,7 @@ func _update_burning_effect() -> void:
 func _on_cd_timeout() -> void:
 	if is_multiplayer_authority():
 		can_shoot = true;
+		_update_power_indicator();
 
 func _on_pt_timeout() -> void:
 	if not is_multiplayer_authority(): return;
@@ -174,6 +190,7 @@ func _on_pt_timeout() -> void:
 	speed = DEFAULT_SPEED;
 	paralyzed_animation.stop();
 	paralyzed_animation.visible = false;
+	_update_power_indicator();
 
 func _deal_burn_damage() -> void:
 	if not is_multiplayer_authority() or is_dead: return;
@@ -183,3 +200,29 @@ func _on_bt_timeout() -> void:
 	if not is_multiplayer_authority(): return;
 	is_burning = false;
 	burn_tick.stop();
+
+func _update_power_indicator() -> void:
+	if not power_indicator:
+		return;
+	
+	if not current_power or is_dead:
+		power_indicator.visible = false;
+		return;
+	
+	power_indicator.visible = true;
+	
+	var base_color = Color(1, 1, 1);
+	if current_power.power_name == "Fireball" or current_power.power_name == "Bola de Fogo":
+		base_color = Color(1, 0.45, 0); # Laranja fogo vibrante
+	elif current_power.power_name == "Electric Bolt" or current_power.power_name == "Raio":
+		base_color = Color(0.1, 0.9, 1); # Ciano elétrico vibrante
+	else:
+		base_color = Color(0.9, 0.9, 0.2);
+		
+	if can_shoot and not is_paralyzed:
+		power_indicator.color = base_color;
+		power_indicator.scale = Vector2(1.3, 1.3);
+	else:
+		power_indicator.color = base_color.darkened(0.65);
+		power_indicator.color.a = 0.35;
+		power_indicator.scale = Vector2(0.7, 0.7);
