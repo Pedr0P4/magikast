@@ -8,6 +8,7 @@ var player_container_scene = preload("res://scenes/UI/player_container.tscn");
 func _ready() -> void:
 	NetworkHandler.players_changed.connect(_on_players_changed);
 	NetworkHandler.server_closed.connect(_on_server_closed);
+	NetworkHandler.network_error.connect(_on_network_error);
 	update_players();
 	
 	if not multiplayer.is_server():
@@ -31,7 +32,14 @@ func _on_players_changed():
 	update_players();
 
 func _on_server_closed():
-	get_tree().change_scene_to_file("res://scenes/UI/menu.tscn");
+	NetworkHandler.show_error_dialog("A conexão com o servidor foi encerrada.", func():
+		get_tree().change_scene_to_file("res://scenes/UI/menu.tscn");
+	);
+
+func _on_network_error(msg: String):
+	NetworkHandler.show_error_dialog(msg, func():
+		get_tree().change_scene_to_file("res://scenes/UI/menu.tscn");
+	);
 	
 func _on_start_button_pressed() -> void:
 	start_game.rpc();

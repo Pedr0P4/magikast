@@ -15,6 +15,7 @@ var matches: int = 0
 var victories: int = 0
 var streak: int = 0
 var max_streak: int = 0
+var is_recording_match: bool = false
 
 func _ready() -> void:
 	pass
@@ -101,12 +102,14 @@ func verify_token() -> void:
 	req.request(url, headers, HTTPClient.METHOD_GET)
 
 func record_match_end(won: bool) -> void:
-	if token == "":
+	if token == "" or is_recording_match:
 		return
+	is_recording_match = true
 	var req = HTTPRequest.new()
 	add_child(req)
 	req.request_completed.connect(func(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
 		req.queue_free()
+		is_recording_match = false
 		if response_code == 200:
 			var data = _parse_response(body)
 			_update_user_data(data)
@@ -125,4 +128,5 @@ func logout() -> void:
 	victories = 0
 	streak = 0
 	max_streak = 0
+	is_recording_match = false
 	stats_updated.emit()

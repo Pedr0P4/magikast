@@ -12,16 +12,20 @@ extends Control
 @onready var user_info_label = $UserBar/UserInfoLabel
 @onready var logout_button = $UserBar/LogoutButton
 
-const PORT = 7777
-const LOCALHOST = "127.0.0.1"
-const JOINING = "Joining"
-const JOINED = "Joined"
+const PORT = 7777;
+const LOCALHOST = "127.0.0.1";
+const JOINING = "Joining";
+const JOINED = "Joined";
 
 func _ready() -> void:
 	if logout_button:
 		logout_button.pressed.connect(_on_logout_pressed)
 	ApiHandler.stats_updated.connect(_update_profile_display)
+	NetworkHandler.network_error.connect(_on_network_error)
 	_update_profile_display()
+
+func _on_network_error(msg: String) -> void:
+	NetworkHandler.show_error_dialog(msg)
 
 func _update_profile_display() -> void:
 	var default_name = ApiHandler.display_name if ApiHandler.display_name != "" else (ApiHandler.user if ApiHandler.user != "" else "Player")
@@ -80,17 +84,16 @@ func _on_back_button_pressed() -> void:
 
 func _on_create_button_pressed() -> void:
 	var default_name = ApiHandler.display_name if ApiHandler.display_name != "" else (ApiHandler.user if ApiHandler.user != "" else "HOST")
-	NetworkHandler.host_game(
-		int(host_port_input.text) if client_port_input.text else PORT, 
-		host_name_input.text if host_name_input.text != "" else default_name)
-	get_tree().change_scene_to_file("res://scenes/UI/lobby.tscn")
+	if NetworkHandler.host_game(
+		int(host_port_input.text) if client_port_input.text == "" else PORT, 
+		host_name_input.text if host_name_input.text != "" else default_name):
+		get_tree().change_scene_to_file("res://scenes/UI/lobby.tscn")
 
 func _on_join_server_button_pressed() -> void:
 	var default_name = ApiHandler.display_name if ApiHandler.display_name != "" else (ApiHandler.user if ApiHandler.user != "" else "CLIENT")
-	NetworkHandler.join_game(
+	if NetworkHandler.join_game(
 		client_ip_input.text if client_ip_input.text else LOCALHOST, 
 		int(client_port_input.text) if client_port_input.text else PORT, 
 		client_name_input.text if client_name_input.text != "" else default_name
-		)
-	get_tree().change_scene_to_file("res://scenes/UI/lobby.tscn")
-
+		):
+		get_tree().change_scene_to_file("res://scenes/UI/lobby.tscn")

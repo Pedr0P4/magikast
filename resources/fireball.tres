@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("1_6daih")
 power_name = "Fireball"
-eficiency = 10
+eficiency = 20
+cooldown = 3.0
 scene = ExtResource("1_scene")
 is_attack = true
 metadata/_custom_type_script = "uid://cgcgtt47fj444"

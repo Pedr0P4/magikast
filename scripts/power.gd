@@ -35,9 +35,7 @@ func _on_body_entered(body: Node2D) -> void:
 	
 	if not body is Player: return;
 	
-	if is_fireball:
-		body.current_power = load("res://resources/fireball.tres");
-	else:
-		body.current_power = load("res://resources/electric_bolt.tres");
+	var power_type = "fireball" if is_fireball else "electric_bolt";
+	body.set_power.rpc(power_type);
 		
 	queue_free();

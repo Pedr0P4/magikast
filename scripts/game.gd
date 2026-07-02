@@ -7,6 +7,7 @@ extends Node2D
 @onready var winner_label: Label = $GameOverScreen/MarginContainer/WinnerLabel;
 
 var player_scene: PackedScene = preload("res://scenes/player.tscn");
+var game_over_triggered: bool = false;
 
 func _ready() -> void:
 	var viewport_size = get_viewport_rect().size
@@ -30,6 +31,8 @@ func _ready() -> void:
 	)
 	
 	player_spawner.spawn_function = _spawn;
+	NetworkHandler.network_error.connect(_on_network_error);
+	NetworkHandler.server_closed.connect(_on_server_closed);
 	if multiplayer.is_server():
 		var players = NetworkHandler.players
 		for p in players:
@@ -62,22 +65,36 @@ func _on_peer_disconnected(id: int) -> void:
 	if player_node:
 		player_node.queue_free()
 
+func _on_server_closed() -> void:
+	NetworkHandler.show_error_dialog("A conexão com o servidor foi encerrada.", func():
+		get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
+	)
+
+func _on_network_error(msg: String) -> void:
+	NetworkHandler.show_error_dialog(msg, func():
+		get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
+	)
+
 func spawn_player(id: int, player_name: String):
 	player_spawner.spawn({"id": id, "name": player_name});
 
 func _spawn(data: Variant) -> Player:
 	var player: Player = player_scene.instantiate();
-	player.current_power = load("res://resources/fireball.tres");
 	player.player_id = data.id;
 	player.name = str(data.id);
 	player.player_name = data.name;
-	player.global_position.x = randi_range(200, 800);
-	player.global_position.y = randi_range(200, 800);
+	var viewport_size = get_viewport_rect().size;
+	player.global_position.x = randf_range(150.0, viewport_size.x - 150.0);
+	player.global_position.y = randf_range(150.0, viewport_size.y - 150.0);
 	player.set_multiplayer_authority(player.player_id);
 	return player;
 
 @rpc("any_peer", "call_local", "reliable")
 func show_game_over(winner_name: String) -> void:
+	if game_over_triggered:
+		return;
+	game_over_triggered = true;
+	
 	game_over_screen.visible = true
 	winner_label.text = winner_name + " Venceu a Batalha!"
 	

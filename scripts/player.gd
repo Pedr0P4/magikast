@@ -25,8 +25,10 @@ const DEFAULT_SPEED: float = 200.0;
 	set(value):
 		if(value <= 0):
 			health = 0;
-			life_bar.value = 0;
-			die();
+			if life_bar: life_bar.value = 0;
+			if not is_dead:
+				is_dead = true;
+				die();
 		else: 
 			health = value;
 			if life_bar: life_bar.value = value;
@@ -39,15 +41,21 @@ const DEFAULT_SPEED: float = 200.0;
 var current_power: PowerData;
 
 var can_shoot: bool = true;
+var is_dead: bool = false;
 var player_name: String;
 var player_id: int;
 
 func _ready() -> void:
 	if paralyzed_animation:
 		paralyzed_animation.visible = false
-	if is_multiplayer_authority():
+	if life_bar:
 		life_bar.value = health;
-		name_label.text = NetworkHandler.players[multiplayer.get_unique_id()]["name"];
+	if name_label:
+		if player_name != "":
+			name_label.text = player_name;
+		elif NetworkHandler.players.has(player_id):
+			name_label.text = NetworkHandler.players[player_id]["name"];
+	if is_multiplayer_authority():
 		cd.timeout.connect(_on_cd_timeout);
 		pt.timeout.connect(_on_pt_timeout);
 		burn_tick.timeout.connect(_deal_burn_damage);
@@ -60,7 +68,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack") and can_shoot and current_power:
 		request_attack.rpc_id(1, rotation);
 		can_shoot = false;
-		cd.start();
+		cd.start(current_power.cooldown);
 		print(player_name + " atirou!");
 
 func _physics_process(delta: float) -> void:
@@ -78,6 +86,11 @@ func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position());
 
 func die() -> void:
+	if burn_tick: burn_tick.stop();
+	if bt: bt.stop();
+	if cd: cd.stop();
+	if pt: pt.stop();
+	
 	if not multiplayer.is_server(): 
 		return
 		
@@ -94,7 +107,7 @@ func die() -> void:
 
 @rpc("any_peer", "call_remote", "reliable")
 func take_damage(damage: int) -> void:
-	if is_multiplayer_authority():
+	if is_multiplayer_authority() and not is_dead:
 		health -= damage;
 
 @rpc("any_peer", "call_remote", "reliable")
@@ -111,6 +124,14 @@ func burn() -> void:
 	if not is_multiplayer_authority(): return;
 	burn_tick.start(0.5);
 	bt.start();
+
+@rpc("any_peer", "call_local", "reliable")
+func set_power(power_type: String) -> void:
+	if power_type == "fireball":
+		current_power = load("res://resources/fireball.tres");
+	elif power_type == "electric_bolt":
+		current_power = load("res://resources/electric_bolt.tres");
+	print(player_name + " adquiriu o poder: " + power_type);
 
 @rpc("any_peer", "call_local", "reliable")
 func request_attack(player_rotation: float) -> void:
@@ -155,7 +176,7 @@ func _on_pt_timeout() -> void:
 	paralyzed_animation.visible = false;
 
 func _deal_burn_damage() -> void:
-	if not is_multiplayer_authority(): return;
+	if not is_multiplayer_authority() or is_dead: return;
 	health -= 2;
 
 func _on_bt_timeout() -> void:

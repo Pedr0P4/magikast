@@ -6,8 +6,9 @@
 [resource]
 script = ExtResource("1_bh3tr")
 power_name = "Electric Bolt"
-eficiency = 5
+eficiency = 10
 speed = 750.0
+cooldown = 4.0
 scene = ExtResource("1_eylvf")
 is_attack = true
 metadata/_custom_type_script = "uid://cgcgtt47fj444"
